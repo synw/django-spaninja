@@ -52,3 +52,11 @@ make build-front
 
 This compiles the frontend to an index.html template. Go to localhost:8000 to check
 out the build in production mode
+
+Backend: do not forget to change the secret key before pushing to production:
+
+```bash
+make shell
+>>> from django.core.management.utils import get_random_secret_key
+>>> get_random_secret_key()
+```
