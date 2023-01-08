@@ -39,6 +39,7 @@ help:
 	@echo "  migrate                       -- to apply database migrations"
 	@echo "  migrations                    -- to create database migrations"
 	@echo "  superuser                     -- to create a superuser for Django admin"
+	@echo "  shell                         -- to open a Django shell"
 	@echo
 	@echo "  build-front                   -- to build the frontend for production"
 	@echo "  front                         -- to run the frontend in dev mode with watch autoreload"
@@ -111,6 +112,13 @@ install-frontend:
 
 install: venv install-backend migrate install-frontend
 .PHONY: install
+
+shell:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Open a Django shell <---$(FORMATRESET)\n"
+	@echo ""
+	$(DJANGO_MANAGE) shell
+.PHONY: shell
 
 check-migrations:
 	@echo ""
