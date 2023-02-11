@@ -6,3 +6,4 @@ flake8
 pyright
 django-debug-toolbar
 django-vitevue
+pytest-django

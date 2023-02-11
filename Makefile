@@ -41,6 +41,8 @@ help:
 	@echo "  superuser                     -- to create a superuser for Django admin"
 	@echo "  shell                         -- to open a Django shell"
 	@echo
+	@echo "  test                          -- run the unit tests"
+	@echo
 	@echo "  build-front                   -- to build the frontend for production"
 	@echo "  front                         -- to run the frontend in dev mode with watch autoreload"
 	@echo "  netfront                      -- to run the frontend in dev network mode with watch autoreload"
@@ -175,6 +177,13 @@ netfront:
 	@echo ""
 	cd $(FRONTEND_DIR) && $(NPM_RUN) net
 .PHONY: front
+
+test:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Run the tests <---$(FORMATRESET)\n"
+	@echo ""
+	$(PYTHON_BIN) -m pytest
+.PHONY: test
 
 check:
 	@echo ""
