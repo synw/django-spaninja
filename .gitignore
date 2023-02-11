@@ -9,6 +9,7 @@ pyvenv.cfg
 .venv
 /email
 /main/webapp_statics/frontend/assets/**
+.pytest_cache
 
 __pycache__/
 *.py[cod]
