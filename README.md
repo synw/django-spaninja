@@ -5,11 +5,11 @@
 
 ## Features
 
-- Login and logout forms
-- User registration with email confimation
 - Auth and csrf protected api by default
 - Auto generated api docs
 - Django forms support
+- Login and logout
+- User registration with email confimation
 - Responsive frontend with dark mode support
 
 ## Install
@@ -60,3 +60,7 @@ make shell
 >>> from django.core.management.utils import get_random_secret_key
 >>> get_random_secret_key()
 ```
+
+## Tests
+
+Pytest is available. To run the unit tests: `make test`
