@@ -6,6 +6,14 @@ from django.conf import settings
 
 
 def decode_token(token: str) -> Tuple[bool, str]:
+    """Decode and validate an activation token
+
+    Args:
+        token (str): the token
+
+    Returns:
+        Tuple[bool, str]: is the token valid and the user email
+    """
     email = ""
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
@@ -17,8 +25,3 @@ def decode_token(token: str) -> Tuple[bool, str]:
         print("Token decode error:", e)
         return (False, email)
     return (True, email)
-
-
-def activate_user(user):
-    user.is_active = True
-    user.save()

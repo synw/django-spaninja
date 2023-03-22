@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # project apps
-    "backend.apps.account",
+    "apps.account",
     # project dependencies
     "corsheaders",
 ]
