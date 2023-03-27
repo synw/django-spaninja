@@ -8,9 +8,9 @@
 
  - [Get started](https://synw.github.io/django-spaninja/get_started)
     - [Install and run](https://synw.github.io/django-spaninja/get_started/install_and_run)
+    - [Write endpoints](https://synw.github.io/django-spaninja/get_started/write_endpoints)
     - [Build](https://synw.github.io/django-spaninja/get_started/build)
  - [Base app](https://synw.github.io/django-spaninja/base_app)
-    - [Write endpoints](https://synw.github.io/django-spaninja/base_app/write_endpoints)
      - [Forms](https://synw.github.io/django-spaninja/base_app/forms)
         - [Usage](https://synw.github.io/django-spaninja/base_app/forms/usage)
      - [Schemas](https://synw.github.io/django-spaninja/base_app/schemas)
@@ -22,6 +22,7 @@
          - [Token](https://synw.github.io/django-spaninja/account_app/utilities/token)
 
 </details>
+
 
 ![](docsite/public/screenshot.png)
 
