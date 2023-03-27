@@ -1,0 +1,1 @@
+{"decode_token":{"funcdef":"def decode_token(\n\ttoken: str\n) -> Tuple[bool, str]","description":"Decode and validate an activation token","long_description":null,"example":null,"params":{"token":{"description":"the token","type":"str","default":null}},"raises":[],"returns":{"name":null,"type":"Tuple[bool, str]"}}}
