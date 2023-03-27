@@ -7,7 +7,8 @@ const links: Array<{ href: string; name: string }> = [
 ];
 
 // python runtime
-const pipPackages = ["sqlite3", "django", "django-ninja", "http://localhost:5173/apps-0.2.0-py3-none-any.whl"];
+const mylib = new URL(`/apps-0.2.0-py3-none-any.whl`, import.meta.url).href;
+const pipPackages = ["sqlite3", "django", "django-ninja", mylib];
 const pyodidePackages = [];
 const examplesExtension = "py";
 
