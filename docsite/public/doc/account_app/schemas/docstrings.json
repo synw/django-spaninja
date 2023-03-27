@@ -1,0 +1,85 @@
+{
+  "LoginFormContract": {
+    "funcdef": "class LoginFormContract(Schema)",
+    "description": "Incoming data from login form post",
+    "long_description": null,
+    "example": {
+      "code": "{\n    \"username\": \"lamdajoe\",\n    \"password\": \"xxx48dioEjni\",\n}",
+      "is_executable": false,
+      "description": ""
+    },
+    "params": {
+      "username": {
+        "description": "the username",
+        "type": "str | None",
+        "default": null
+      },
+      "password": {
+        "description": "the password",
+        "type": "str | None",
+        "default": null
+      }
+    },
+    "raises": [],
+    "returns": null
+  },
+  "RegisterFormContract": {
+    "funcdef": "class RegisterFormContract(Schema)",
+    "description": "Incoming data from registration form post",
+    "long_description": null,
+    "example": {
+      "code": "{\n    \"name\": \"lamdajoe\",\n    \"email\": \"amail@example.com\",\n    \"password1\": \"xxx48dioEjni\",\n    \"password2\": \"xxx48dioEjni\",\n}",
+      "is_executable": false,
+      "description": ""
+    },
+    "params": {
+      "name": {
+        "description": "the user full name",
+        "type": "str | None",
+        "default": null
+      },
+      "email": {
+        "description": "the password",
+        "type": "str | None",
+        "default": null
+      },
+      "password1": {
+        "description": "the password confirmation",
+        "type": "str | None",
+        "default": null
+      }
+    },
+    "raises": [],
+    "returns": null
+  },
+  "StateContract": {
+    "funcdef": "class StateContract(Schema)",
+    "description": "Account state data",
+    "long_description": "This is returned by the /api/state endpoint called<br />when the frontend app mounts to get the state of the<br />user",
+    "example": {
+      "code": "{\n    \"is_connected\": True,\n    \"username\": \"johndoe\",\n}",
+      "is_executable": false,
+      "description": ""
+    },
+    "params": {
+      "is_connected": {
+        "description": "if the user is connected or not",
+        "type": "bool",
+        "default": null
+      },
+      "username": {
+        "description": "the user username",
+        "type": "str",
+        "default": null
+      }
+    },
+    "raises": [],
+    "returns": null,
+    "extra_examples": [
+      {
+        "code": "from apps.account.schemas import StateContract\n\n# inspect the contract\nprops = StateContract.schema()[\"properties\"]\nfor key in props:\n    print(key, \"prop is of type\", props[key][\"type\"])\n\n# create a contract\nuser_state_data = {\n    \"is_connected\": True,\n    \"username\": \"johndoe\",\n}\nstate_contract = StateContract(**user_state_data)\nprint(\"The contract json payload:\", str(state_contract.json(indent=2)))\n",
+        "is_executable": true
+      }
+    ]
+  }
+}

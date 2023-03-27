@@ -1,0 +1,52 @@
+{
+  "MsgResponseContract": {
+    "funcdef": "class MsgResponseContract(Schema)",
+    "description": "A response with a text message",
+    "long_description": null,
+    "example": {
+      "code": "{\n    \"message\": \"The message\"\n}",
+      "is_executable": false,
+      "description": ""
+    },
+    "params": {
+      "message": {
+        "description": "the text message",
+        "type": "str",
+        "default": null
+      }
+    },
+    "raises": [],
+    "returns": null,
+    "extra_examples": [
+      {
+        "code": "from apps.base.schemas import MsgResponseContract\n\n# inspect the contract\nprops = MsgResponseContract.schema()[\"properties\"]\nfor key in props:\n    print(key, \"prop is of type\", props[key][\"type\"])\n\n# create a contract\ninstance = {\n    \"message\": \"A message\",\n}\ninstance_contract = MsgResponseContract(**instance)\nprint(\"The contract json payload:\", str(instance_contract.json(indent=2)))\n",
+        "is_executable": true
+      }
+    ]
+  },
+  "FormInvalidResponseContract": {
+    "funcdef": "class FormInvalidResponseContract(Schema)",
+    "description": "Form errors dict provided by Django from form validation",
+    "long_description": null,
+    "example": {
+      "code": "{\n    \"errors\": {\n        'password2': [\n            {\n                'message': 'The two password fields didn’t match.',\n                'code': 'password_mismatch'\n            }\n        ]\n    }\n}",
+      "is_executable": false,
+      "description": ""
+    },
+    "params": {
+      "errors": {
+        "description": "a Django form errors dict",
+        "type": "Dict[str, List[Dict[str, Any]]]",
+        "default": null
+      }
+    },
+    "raises": [],
+    "returns": null,
+    "extra_examples": [
+      {
+        "code": "from django.contrib.auth.forms import UserCreationForm\nfrom apps.base.schemas import FormInvalidResponseContract\n\n# inspect the contract\nprops = FormInvalidResponseContract.schema()[\"properties\"]\nfor key in props:\n    print(key, \"prop is of type\", props[key][\"type\"])\n\n# create a contract\ndata = {\n    \"username\": \"john\",\n    \"password1\": \"foo\",\n    \"password2\": \"bar\",\n}\nform = UserCreationForm(data=data)\nprint(\"The Django form has errors:\")\nprint(form.errors)\njson_errs = form.errors.get_json_data(escape_html=True)\ninstance_contract = FormInvalidResponseContract(errors=json_errs)\nstr(instance_contract)\n",
+        "is_executable": true
+      }
+    ]
+  }
+}
