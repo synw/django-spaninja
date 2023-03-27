@@ -8,6 +8,13 @@ class MsgResponseContract(Schema):
 
     Args:
         message (str): the text message
+
+    Example:
+        ::
+
+        {
+            "message": "The message"
+        }
     """
 
     message: str
@@ -18,6 +25,20 @@ class FormInvalidResponseContract(Schema):
 
     Args:
         errors (Dict[str, List[Dict[str, Any]]]): a Django form errors dict
+
+    Example:
+        ::
+
+        {
+            "errors": {
+                'password2': [
+                    {
+                        'message': 'The two password fields didn’t match.',
+                        'code': 'password_mismatch'
+                    }
+                ]
+            }
+        }
     """
 
     errors: Dict[str, List[Dict[str, Any]]]

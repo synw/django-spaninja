@@ -7,6 +7,19 @@ User = get_user_model()
 
 
 class RegistrationForm(UserCreationForm):
+    """A form to register a user
+
+    Args:
+        UserCreationForm (ModelForm): the base user creation form from Django that we \
+        inherit from
+
+    Raises:
+        forms.ValidationError: if a field is not correctly validated
+
+    Returns:
+        forms.Form: the Django form
+    """
+
     error_messages = {
         "duplicate_email": "This email address is already in use.",
         "password_mismatch": "The two passwords you filled out do not match.",

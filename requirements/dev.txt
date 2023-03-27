@@ -7,3 +7,4 @@ pyright
 django-debug-toolbar
 django-vitevue
 pytest-django
+docdundee

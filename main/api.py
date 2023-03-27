@@ -20,7 +20,7 @@ api = NinjaAPI(**api_kwargs)
 
 @api.exception_handler(ValidationError)
 def custom_validation_errors(request, exc) -> HttpResponse:
-    """A validator that will fire a 418 and a message
+    """A validator that will fire a 418 and a message \
     if the data is not compliant to the endpoint schema
 
     Args:

@@ -36,12 +36,37 @@ router = Router(tags=["account"])
 def register_save(request: HttpRequest, data: RegisterFormContract):
     """Register a user from a registration form
 
+    Endpoint url: /api/account/register
+
     Args:
         request (HttpRequest): the django http request object
         data (RegisterFormContract): the form json payload
 
     Returns:
         HttpResponse: an http response
+
+    Example:
+        ::
+
+        # example of valid payload
+        {
+            "name": "John Doe",
+            "email": "mymail@example.com",
+            "password1": "xxxzzzxxx",
+            "password2": "xxxzzzxxx",
+        }
+
+        # example of form error payload return with a 422 status code
+        {
+            "errors": {
+                'password2': [
+                    {
+                        'message': 'The two password fields didn’t match.',
+                        'code': 'password_mismatch'
+                    }
+                ]
+            }
+        }
     """
     form = RegistrationForm(data=data.dict())
     if not form.is_valid():
@@ -74,7 +99,9 @@ def activate_save(
 ) -> Tuple[int, None | MsgResponseContract]:
     """Activate a user from a token
 
-    User has clicked on link in an email with an activation token,
+    Endpoint url: /api/account/activate/{token}
+
+    User has clicked on link in an email with an activation token, \
     and we activate the user if the token is valid
 
     Args:
@@ -82,7 +109,16 @@ def activate_save(
         token (str): the token
 
     Returns:
-        Tuple[int, None | MsgResponseContract]: a 204 empty or a 401 with a message
+        Tuple[int, None | MsgResponseContract]: a 204 empty or a 401 with a message if \
+        the token is invalid
+
+    Example:
+        ::
+
+        # example of an activation refused with a 401 http status code
+        {
+            "message": "Account activation refused"
+        }
     """
     is_valid, email = decode_token(token)
     if is_valid is False:
@@ -108,6 +144,8 @@ def authlogin(
     request: HttpRequest, data: LoginFormContract
 ) -> Tuple[int, None | FormInvalidResponseContract | MsgResponseContract]:
     """Login a user from a username and password payload
+
+    Endpoint url: /api/account/login
 
     Args:
         request (HttpRequest): the django http request object
@@ -141,6 +179,8 @@ def authlogin(
 def authlogout(request: HttpRequest) -> Tuple[int, None]:
     """Logout a user
 
+    Endpoint url: /api/account/logout
+
     Args:
         request (HttpRequest): the django http request object
 
@@ -156,6 +196,8 @@ def authlogout(request: HttpRequest) -> Tuple[int, None]:
 @router.get("/state", auth=None, response={200: StateContract})
 def global_state(request: HttpRequest) -> Tuple[int, StateContract]:
     """Returns info on user state and set a csrf token
+
+    Endpoint url: /api/account/state
 
     Args:
         request (HttpRequest): the django http request object

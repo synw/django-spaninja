@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # project apps
     "apps.account",
+    "apps.doc",
     # project dependencies
     "corsheaders",
 ]
