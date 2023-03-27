@@ -1,11 +1,11 @@
 {
   "lang": "python",
   "urls": {
-    "LoginFormContract": "/account/schemas/LoginFormContract",
-    "RegisterFormContract": "/account/schemas/RegisterFormContract",
-    "StateContract": "/account/schemas/StateContract",
-    "MsgResponseContract": "/app/schemas/MsgResponseContract",
-    "FormInvalidResponseContract": "/app/schemas/FormInvalidResponseContract",
+    "LoginFormContract": "/account_app/schemas/LoginFormContract",
+    "RegisterFormContract": "/account_app/schemas/RegisterFormContract",
+    "StateContract": "/account_app/schemas/StateContract",
+    "MsgResponseContract": "/base_app/schemas/MsgResponseContract",
+    "FormInvalidResponseContract": "/base_app/schemas/FormInvalidResponseContract",
     "HttpResponse": "https://docs.djangoproject.com/en/4.1/ref/request-response/#httpresponse-objects",
     "HttpRequest": "https://docs.djangoproject.com/en/4.1/ref/request-response/#httprequest-objects"
   }
