@@ -54,6 +54,8 @@ help:
 	@echo "  pycheck                       -- to launch Pycheck code checks"
 	@echo "  quality                       -- to launch all quality checks"
 	@echo
+	@echo "  doc                            -- to build the documentation from docstrings"
+	@echo
 
 clean-pycache:
 	@echo ""
@@ -216,3 +218,9 @@ quality: check-migrations pycheck
 	@echo "Running quality checks"
 	@echo ""
 .PHONY: quality
+
+doc:
+	@echo ""
+	@echo "Building the doc from docstrings"
+	$(DJANGO_MANAGE) build_doc
+.PHONY: doc
