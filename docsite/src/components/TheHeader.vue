@@ -2,16 +2,20 @@
   <sw-header class="fixed top-0 left-0 z-40 w-screen h-16" :class="css ? css : 'primary'"
     @togglemenu="isMenuVisible = !isMenuVisible">
     <template #branding>
-      <a @click="$router.push('/')">
-        <div class="ml-5 text-2xl cursor-pointer">
-          {{ libTitle }}
+      <div class="flex flex-row items-center h-full cursor-pointer" @click="$router.push('/')">
+        <div class="mx-3">
+          <i-twemoji:ninja-medium-light-skin-tone class="text-5xl"></i-twemoji:ninja-medium-light-skin-tone>
         </div>
-      </a>
+        <div class="text-2xl txt-lighter">Django Spa Ninja</div>
+      </div>
     </template>
     <template #mobile-branding>
-      <a class="ml-3 text-2xl" @click="$router.push('/')">
-        {{ libTitle }}
-      </a>
+      <div class="inline-flex flex-row items-center h-full pt-1 ml-2 text-2xl truncate" @click="$router.push('/')">
+        <div class="flex flex-row items-center h-full">
+          <i-twemoji:ninja-medium-light-skin-tone class="mx-3 text-5xl"></i-twemoji:ninja-medium-light-skin-tone>
+          <div class="text-2xl txt-lighter">Django Spa Ninja</div>
+        </div>
+      </div>
     </template>
     <template #mobile-back>
       <div class="pl-2 text-2xl" v-show="loc != '/'">

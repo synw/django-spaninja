@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     'IFaBrands:github': typeof import('~icons/fa-brands/github')['default']
     'IFaSolid:moon': typeof import('~icons/fa-solid/moon')['default']
     'IFaSolid:sun': typeof import('~icons/fa-solid/sun')['default']
+    'ITwemoji:ninjaMediumLightSkinTone': typeof import('~icons/twemoji/ninja-medium-light-skin-tone')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheHeader: typeof import('./src/components/TheHeader.vue')['default']
