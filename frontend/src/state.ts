@@ -2,6 +2,7 @@ import { useApi } from "restmix";
 import { useScreenSize } from "@snowind/state";
 import { User } from "@snowind/state";
 import { initNotifyService } from "@/notify";
+import { useForms } from "djangoapiforms";
 
 const serverUrl = import.meta.env.DEV ? "http://localhost:8000" : "";
 
@@ -12,6 +13,7 @@ const user = new User();
 const api = useApi({
   serverUrl: serverUrl
 });
+const forms = useForms(api);
 const { isMobile, isTablet, isDesktop } = useScreenSize();
 
 function initState() {
@@ -32,6 +34,7 @@ async function initUserState() {
 export {
   user,
   api,
+  forms,
   serverUrl,
   isMobile,
   isTablet,

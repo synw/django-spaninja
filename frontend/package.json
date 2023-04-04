@@ -15,6 +15,7 @@
     "dependencies": {
         "@snowind/header": "^0.0.10",
         "@snowind/state": "^0.0.3",
+        "djangoapiforms": "^0.0.3",
         "primeicons": "^6.0.1",
         "primevue": "^3.22.4",
         "restmix": "^0.0.7",

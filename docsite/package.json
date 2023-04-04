@@ -6,8 +6,8 @@
     "dev": "vite",
     "build": "vite build && cd ./dist && ln -s index.html 404.html",
     "preview": "vite build && vite preview",
-    "wdoc": "yarn docnav",
-    "tdoc": "yarn docnav -t",
+    "wdoc": "node ./bin/docnav.mjs",
+    "tdoc": "node ./bin/docnav.mjs -t",
     "docmap": "node ./node_modules/@docdundee/docnav/bin/navmap.mjs"
   },
   "dependencies": {

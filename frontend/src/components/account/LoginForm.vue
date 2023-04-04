@@ -28,8 +28,7 @@ import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import FormCard from '@/widgets/FormCard.vue';
 import router from '@/router';
-import { postForm } from '@/forms';
-import { user } from '@/state';
+import { user, forms } from '@/state';
 import { msg } from '@/notify';
 
 const username = ref();
@@ -38,23 +37,27 @@ const password = ref();
 const form = reactive<{ errors: Record<string, string> }>({ errors: {} });
 
 async function postLogin() {
-  const { ok, res } = await postForm(form, "/api/account/login", {
+  const { error, res, errors } = await forms.post("/api/account/login", {
     username: username.value,
     password: password.value,
   });
-  if (ok) {
+  if (!error) {
     console.log("Login ok");
-    user.name = username.value;
+    user.name.value = username.value;
     user.isLoggedIn.value = true;
-    msg.success("Ok", `User ${user.name} is logged in`)
+    msg.success("Ok", `User ${user.name.value} is logged in`)
     router.push("/")
   } else {
-    if (res?.status == 401) {
-      msg.warn("Login error", res.data["message"], 60000)
+    if (error.type == "validation") {
+      console.log("422", errors)
+      form.errors = errors;
+      if ("__all__" in form.errors) {
+        //console.log("ERRS", form.errors)
+        msg.warn("Login error", form.errors["__all__"], 60000)
+      }
     }
-    else if ("__all__" in form.errors) {
-      //console.log("ERRS", form.errors)
-      msg.warn("Login error", form.errors["__all__"], 60000)
+    else if (res.status == 401) {
+      msg.warn("Login error", res.data["message"], 60000)
     }
   }
 }

@@ -20,16 +20,14 @@
         <Password v-model="password1" />
         <label for="password1">Password</label>
       </span>
-      <small v-if="'password1' in form.errors" id="password1-help" class="p-error"
-        v-html="form.errors.password1"></small>
+      <small v-if="'password1' in form.errors" id="password1-help" class="p-error" v-html="form.errors.password1"></small>
     </div>
     <div>
       <span class="p-float-label">
         <Password v-model="password2" :feedback="false" />
         <label for="password2">Confirm password</label>
       </span>
-      <small v-if="'password2' in form.errors" id="password2-help" class="p-error"
-        v-html="form.errors.password2"></small>
+      <small v-if="'password2' in form.errors" id="password2-help" class="p-error" v-html="form.errors.password2"></small>
     </div>
     <div class="flex flex-col pt-2 text-center">
       <button class="w-full xs:w-96 btn success" @click="post()">Save</button>
@@ -43,7 +41,7 @@ import { reactive, ref } from 'vue';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import FormCard from '@/widgets/FormCard.vue';
-import { postForm } from "@/forms";
+import { forms } from "@/state";
 
 const emit = defineEmits(["formOk"])
 
@@ -61,9 +59,15 @@ async function post() {
     password1: password1.value,
     password2: password2.value,
   }
-  const { ok } = await postForm(form, "/api/account/register", payload);
-  if (ok) {
+  const { error, res, errors } = await forms.post("/api/account/register", payload);
+  if (!error) {
     emit("formOk");
+  } else {
+    if (error.type == "validation") {
+      form.errors = errors
+    } else {
+      throw new Error(`Unmanaged error: status code ${res.status}`)
+    }
   }
 }
 </script>
