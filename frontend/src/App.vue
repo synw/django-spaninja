@@ -32,9 +32,15 @@ onMounted(() => initUserState());
 </script>
 
 <style lang="sass">
-  .app-form
-    & input, .p-dropdown
-      @apply w-full xxs:min-w-[22rem] xs:min-w-[24rem]
+.app-form
+  & input, .p-dropdown
+    @apply w-full xxs:min-w-[22rem] xs:min-w-[24rem]
+.p-dialog
+  & .p-button.successbtn, .p-button.successbtn:enabled:hover
+    @apply success border-none ring-0
+  & .p-button.dangerbtn, .p-button.dangerbtn:enabled:hover
+    @apply danger border-none ring-0
+  & .p-button.warningbtn, .p-button.warningbtn:enabled:hover
 </style>
 
 
