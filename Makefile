@@ -87,7 +87,7 @@ clean-frontend-install:
 	rm -Rf $(FRONTEND_DIR)/node_modules
 .PHONY: clean-frontend-install
 
-clean: clean-var clean-backend-install clean-frontend-install clean-frontend-build clean-pycache
+clean: clean-backend-install clean-frontend-install clean-frontend-build clean-pycache
 .PHONY: clean
 
 venv:
