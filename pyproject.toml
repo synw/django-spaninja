@@ -1,13 +1,10 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "apps"
 version = "0.2.1"
 description = "Django template package"
 license = {file = "LICENSE"}
 requires-python = ">=3.9"
+optional-dependencies = {front = ["npm"]}
 
 [options]
 include_package_data = true
@@ -15,3 +12,9 @@ zip_safe = false
 
 [tool.setuptools]
 packages = ["main", "apps"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
