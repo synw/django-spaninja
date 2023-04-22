@@ -26,6 +26,7 @@ help:
 	@echo
 	@echo "  install-backend               -- to install backend requirements with Virtualenv and Pip"
 	@echo "  install-frontend              -- to install frontend requirements with Npm"
+	@echo "  install-pycheck               -- to install globally Pycheck (WARNING: Have to install/clean manually)"
 	@echo "  install                       -- to install backend and frontend"
 	@echo
 	@echo "  clean                         -- to clean EVERYTHING (WARNING: you cannot recovery from this)"
@@ -34,6 +35,7 @@ help:
 	@echo "  clean-frontend-install        -- to clean frontend installation"
 	@echo "  clean-frontend-build          -- to clean frontend built files"
 	@echo "  clean-pycache                 -- to remove all __pycache__, this is recursive from current directory"
+	@echo "  clean-pycheck                 -- to remove Pycheck installation"
 	@echo
 	@echo "  run                           -- to run Django development server"
 	@echo "  check-migrations              -- to check for pending application migrations (do not write anything)"
@@ -98,6 +100,18 @@ clean-frontend-install:
 
 clean: clean-backend-install clean-db clean-frontend-install clean-frontend-build clean-pycache
 .PHONY: clean
+
+clean-pycheck:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning Pycheck installation <---$(FORMATRESET)\n"
+	@echo ""
+	npm uninstall -g pycheck
+
+install-pycheck:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Installing Pycheck <---$(FORMATRESET)\n"
+	@echo ""
+	npm install -g pycheck
 
 venv:
 	@echo ""
