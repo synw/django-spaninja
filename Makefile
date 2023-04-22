@@ -107,6 +107,7 @@ clean-pycheck:
 	$(NPM) remove global pycheck
 	rm -Rf yarn.lock
 	rm -Rf package.json
+	rm -Rf node_modules
 
 install-pycheck:
 	@echo ""
