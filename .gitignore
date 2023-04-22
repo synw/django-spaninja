@@ -3,6 +3,7 @@
 .project
 .pydevproject
 .settings
+.idea
 coverage_html_report/
 test_db
 pyvenv.cfg
