@@ -95,7 +95,6 @@ clean-frontend-install:
 	@echo ""
 	rm -Rf $(FRONTEND_DIR)/node_modules
 	rm -Rf $(FRONTEND_DIR)/yarn.lock
-	rm -Rf yarn.lock
 .PHONY: clean-frontend-install
 
 clean: clean-backend-install clean-db clean-frontend-install clean-frontend-build clean-pycache
@@ -105,7 +104,9 @@ clean-pycheck:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning Pycheck installation <---$(FORMATRESET)\n"
 	@echo ""
-	npm uninstall -g pycheck
+	$(NPM) remove global pycheck
+	rm -Rf yarn.lock
+	rm -Rf package.json
 
 install-pycheck:
 	@echo ""
