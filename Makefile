@@ -85,6 +85,7 @@ clean-frontend-install:
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning frontend install <---$(FORMATRESET)\n"
 	@echo ""
 	rm -Rf $(FRONTEND_DIR)/node_modules
+	rm -Rf $(FRONTEND_DIR)/yarn.lock
 .PHONY: clean-frontend-install
 
 clean: clean-backend-install clean-frontend-install clean-frontend-build clean-pycache
