@@ -13,8 +13,7 @@ DJANGOPROJECT_DIR=main
 DJANGO_SETTINGS=main.settings.local
 STATICFILES_DIR=$(DJANGOPROJECT_DIR)/webapp_statics
 FRONTEND_DIR=frontend
-NPM_INSTALL=yarn # or npm install
-NPM_RUN=yarn # or npm run
+NPM=yarn# or npm
 
 # Formatting variables, FORMATRESET is always to be used last to close formatting
 FORMATBLUE:=$(shell tput setab 4)
@@ -96,6 +95,7 @@ clean-frontend-install:
 	@echo ""
 	rm -Rf $(FRONTEND_DIR)/node_modules
 	rm -Rf $(FRONTEND_DIR)/yarn.lock
+	rm -Rf yarn.lock
 .PHONY: clean-frontend-install
 
 clean: clean-backend-install clean-db clean-frontend-install clean-frontend-build clean-pycache
@@ -111,7 +111,7 @@ install-pycheck:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Installing Pycheck <---$(FORMATRESET)\n"
 	@echo ""
-	npm install -g pycheck
+	$(NPM) add global pycheck
 
 venv:
 	@echo ""
@@ -134,7 +134,7 @@ install-frontend:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Installing frontend requirements <---$(FORMATRESET)\n"
 	@echo ""
-	cd $(FRONTEND_DIR) && $(NPM_INSTALL)
+	cd $(FRONTEND_DIR) && $(NPM) install
 .PHONY: install-frontend
 
 install: venv install-backend migrate install-frontend
@@ -186,21 +186,21 @@ build-front:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Building the frontend <---$(FORMATRESET)\n"
 	@echo ""
-	cd $(FRONTEND_DIR) && $(NPM_RUN) build
+	cd $(FRONTEND_DIR) && $(NPM) build
 .PHONY: build-front
 
 front:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Running the frontend in dev mode <---$(FORMATRESET)\n"
 	@echo ""
-	cd $(FRONTEND_DIR) && $(NPM_RUN) dev
+	cd $(FRONTEND_DIR) && $(NPM) dev
 .PHONY: front
 
 netfront:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Running the frontend in dev network mode <---$(FORMATRESET)\n"
 	@echo ""
-	cd $(FRONTEND_DIR) && $(NPM_RUN) net
+	cd $(FRONTEND_DIR) && $(NPM) net
 .PHONY: front
 
 test:
