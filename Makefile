@@ -30,6 +30,7 @@ help:
 	@echo
 	@echo "  clean                         -- to clean EVERYTHING (WARNING: you cannot recovery from this)"
 	@echo "  clean-backend-install         -- to clean backend installation"
+	@echo "  clean-db                      -- to clean db files"
 	@echo "  clean-frontend-install        -- to clean frontend installation"
 	@echo "  clean-frontend-build          -- to clean frontend built files"
 	@echo "  clean-pycache                 -- to remove all __pycache__, this is recursive from current directory"
@@ -73,6 +74,13 @@ clean-backend-install:
 	rm -Rf $(VENV_PATH)
 .PHONY: clean-backend-install
 
+clean-db:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning db files <---$(FORMATRESET)\n"
+	@echo ""
+	rm -Rf db.sqlite3
+.PHONY: clean-db
+
 clean-frontend-build:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning frontend built files <---$(FORMATRESET)\n"
@@ -88,7 +96,7 @@ clean-frontend-install:
 	rm -Rf $(FRONTEND_DIR)/yarn.lock
 .PHONY: clean-frontend-install
 
-clean: clean-backend-install clean-frontend-install clean-frontend-build clean-pycache
+clean: clean-backend-install clean-db clean-frontend-install clean-frontend-build clean-pycache
 .PHONY: clean
 
 venv:
