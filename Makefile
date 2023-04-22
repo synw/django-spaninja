@@ -248,3 +248,4 @@ doc:
 	@echo "Building the doc from docstrings"
 	$(DJANGO_MANAGE) build_doc
 .PHONY: doc
+
