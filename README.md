@@ -36,3 +36,39 @@
 <img src="docsite/public/poneyninja.png" alt="" />
 </div>
 
+## Development 
+
+### Code quality
+
+This project uses [Pycheck](https://github.com/emencia/pycheck) to monitor the quality of the code. To install
+the code quality tools:
+
+```bash
+make install-pycheck
+# or
+yarn global add @pycheck/cli
+yarn global add @pycheck/ui
+# or
+npm install -g @pycheck/cli
+npm install -g @pycheck/ui
+```
+
+#### Analysis and history
+
+Run:
+
+```bash
+pycheckui
+```
+
+Open `localhost:5173` in a browser to run an analysis. Note: this uses the `.pycheck.db` Sqlite file
+to store the code quality history
+
+#### Command line
+
+To do a quick check in the command line (not recorded in history):
+
+```bash
+pycheck
+```
+
