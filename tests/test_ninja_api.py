@@ -10,12 +10,12 @@ def test_api_json_openapi(admin_client):
 
 def test_api_docs(admin_client):
     """Test the /api/docs endpoint"""
-    response = admin_client.get(f"{api.root_path}docs")
+    response = admin_client.get(f"{api.root_path}{api.docs_url[1:]}")
     assert response.status_code == 200
 
 
 def test_visitor_cannot_access_api(client):
     """Test that visitor cannot access API"""
-    response = client.get(f"{api.root_path}docs")
+    response = client.get(f"{api.root_path}{api.docs_url[1:]}")
     assert response.status_code == 302
-    assert response.url == "/admin/login/?next=/api/docs"
+    assert response.url == f"/admin/login/?next={api.root_path}{api.docs_url[1:]}"
