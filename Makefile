@@ -104,7 +104,8 @@ clean-pycheck:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning Pycheck installation <---$(FORMATRESET)\n"
 	@echo ""
-	$(NPM) remove global pycheck
+	$(NPM) global remove @pycheck/cli
+	$(NPM) global remove @pycheck/ui
 	rm -Rf yarn.lock
 	rm -Rf package.json
 	rm -Rf node_modules
@@ -113,7 +114,8 @@ install-pycheck:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Installing Pycheck <---$(FORMATRESET)\n"
 	@echo ""
-	$(NPM) add global pycheck
+	$(NPM) global add @pycheck/cli
+	$(NPM) global add @pycheck/ui
 
 venv:
 	@echo ""
