@@ -13,8 +13,7 @@ DJANGOPROJECT_DIR=main
 DJANGO_SETTINGS=main.settings.local
 STATICFILES_DIR=$(DJANGOPROJECT_DIR)/webapp_statics
 FRONTEND_DIR=frontend
-NPM_INSTALL=yarn # or npm install
-NPM_RUN=yarn # or npm run
+NPM=yarn# or npm
 
 # Formatting variables, FORMATRESET is always to be used last to close formatting
 FORMATBLUE:=$(shell tput setab 4)
@@ -26,13 +25,16 @@ help:
 	@echo
 	@echo "  install-backend               -- to install backend requirements with Virtualenv and Pip"
 	@echo "  install-frontend              -- to install frontend requirements with Npm"
+	@echo "  install-pycheck               -- to install globally Pycheck (WARNING: Have to install/clean manually)"
 	@echo "  install                       -- to install backend and frontend"
 	@echo
 	@echo "  clean                         -- to clean EVERYTHING (WARNING: you cannot recovery from this)"
 	@echo "  clean-backend-install         -- to clean backend installation"
+	@echo "  clean-db                      -- to clean db files"
 	@echo "  clean-frontend-install        -- to clean frontend installation"
 	@echo "  clean-frontend-build          -- to clean frontend built files"
 	@echo "  clean-pycache                 -- to remove all __pycache__, this is recursive from current directory"
+	@echo "  clean-pycheck                 -- to remove Pycheck installation"
 	@echo
 	@echo "  run                           -- to run Django development server"
 	@echo "  check-migrations              -- to check for pending application migrations (do not write anything)"
@@ -73,6 +75,13 @@ clean-backend-install:
 	rm -Rf $(VENV_PATH)
 .PHONY: clean-backend-install
 
+clean-db:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning db files <---$(FORMATRESET)\n"
+	@echo ""
+	rm -Rf db.sqlite3
+.PHONY: clean-db
+
 clean-frontend-build:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning frontend built files <---$(FORMATRESET)\n"
@@ -85,10 +94,26 @@ clean-frontend-install:
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning frontend install <---$(FORMATRESET)\n"
 	@echo ""
 	rm -Rf $(FRONTEND_DIR)/node_modules
+	rm -Rf $(FRONTEND_DIR)/yarn.lock
 .PHONY: clean-frontend-install
 
-clean: clean-var clean-backend-install clean-frontend-install clean-frontend-build clean-pycache
+clean: clean-backend-install clean-db clean-frontend-install clean-frontend-build clean-pycache
 .PHONY: clean
+
+clean-pycheck:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Cleaning Pycheck installation <---$(FORMATRESET)\n"
+	@echo ""
+	$(NPM) remove global pycheck
+	rm -Rf yarn.lock
+	rm -Rf package.json
+	rm -Rf node_modules
+
+install-pycheck:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Installing Pycheck <---$(FORMATRESET)\n"
+	@echo ""
+	$(NPM) add global pycheck
 
 venv:
 	@echo ""
@@ -111,7 +136,7 @@ install-frontend:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Installing frontend requirements <---$(FORMATRESET)\n"
 	@echo ""
-	cd $(FRONTEND_DIR) && $(NPM_INSTALL)
+	cd $(FRONTEND_DIR) && $(NPM) install
 .PHONY: install-frontend
 
 install: venv install-backend migrate install-frontend
@@ -163,21 +188,21 @@ build-front:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Building the frontend <---$(FORMATRESET)\n"
 	@echo ""
-	cd $(FRONTEND_DIR) && $(NPM_RUN) build
+	cd $(FRONTEND_DIR) && $(NPM) build
 .PHONY: build-front
 
 front:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Running the frontend in dev mode <---$(FORMATRESET)\n"
 	@echo ""
-	cd $(FRONTEND_DIR) && $(NPM_RUN) dev
+	cd $(FRONTEND_DIR) && $(NPM) dev
 .PHONY: front
 
 netfront:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Running the frontend in dev network mode <---$(FORMATRESET)\n"
 	@echo ""
-	cd $(FRONTEND_DIR) && $(NPM_RUN) net
+	cd $(FRONTEND_DIR) && $(NPM) net
 .PHONY: front
 
 test:
@@ -210,7 +235,7 @@ flake:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Flake <---$(FORMATRESET)\n"
 	@echo ""
-	$(FLAKE) --statistics --show-source $(DJANGOPROJECT_DIR) backend
+	$(FLAKE) --statistics --show-source $(DJANGOPROJECT_DIR) apps/
 .PHONY: flake
 
 quality: check-migrations pycheck
@@ -224,3 +249,4 @@ doc:
 	@echo "Building the doc from docstrings"
 	$(DJANGO_MANAGE) build_doc
 .PHONY: doc
+
