@@ -10,14 +10,12 @@ class TestNinjaTestCase(NinjaTestCase):
         res = self.client.get(f"{self.root_path}{self.docs_url[1:]}")
         assert res.status_code == 302
 
-    def test_get_authentificated(self):
-        self.client.force_login(self.user)
-        res_redirect = self.client.get(f"{self.root_path}{self.docs_url[1:]}")
+    def test_get_redirected_to_login(self):
+        res_redirect = self.user_client.get(f"{self.root_path}{self.docs_url[1:]}")
         assert res_redirect.status_code == 302
-        res = self.client.get(f"{self.root_path}login")
+        res = self.user_client.get(f"{self.root_path}login")
         assert res.status_code == 200
 
     def test_get_admin_authentificated(self):
-        self.client.force_login(self.admin_user)
-        res = self.client.get(f"{self.root_path}{self.docs_url[1:]}")
+        res = self.admin_client.get(f"{self.root_path}{self.docs_url[1:]}")
         assert res.status_code == 200
