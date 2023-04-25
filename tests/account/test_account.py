@@ -44,7 +44,7 @@ class TestAccount(NinjaTestCase):
             f"{api.root_path}account/register",
             data=json.dumps(
                 {
-                    "name": "johndoe",
+                    "name": "johndoe",  # TODO: name is not used, may change username django settings
                     "password1": "johndoeknowall",
                     "password2": "johndoeknowall",
                     "email": "johndoe@dummy.dummy",
@@ -55,3 +55,28 @@ class TestAccount(NinjaTestCase):
         assert response.status_code == 200
         joker_user = get_user_model().objects.get(username="johndoe@dummy.dummy")
         assert joker_user
+
+    def test_accout_register_fail(self):
+        response = self.client.post(
+            f"{api.root_path}account/register",
+            data=json.dumps(
+                {
+                    "name": "johndoe",
+                    "password1": "johndoeknowall",
+                    "password2": "jokerknowall",
+                    "email": "johndoe@dummy.dummy",
+                }
+            ),
+            content_type="application/json",
+        )
+        assert response.status_code == 422
+        assert response.json() == {
+            "errors": {
+                "password2": [
+                    {
+                        "code": "password_mismatch",
+                        "message": "The two passwords you filled out do not " "match.",
+                    }
+                ]
+            }
+        }
