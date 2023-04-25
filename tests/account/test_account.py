@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-
+from django.test import override_settings
 from apps.account.utils.token import encode_token
 from main.api import api
 from ..testcase import NinjaTestCase
@@ -55,8 +55,8 @@ class TestAccount(NinjaTestCase):
             content_type="application/json",
         )
         assert response.status_code == 200
-        joker_user = get_user_model().objects.get(username="johndoe@dummy.dummy")
-        assert joker_user
+        created_user = get_user_model().objects.get(username="johndoe@dummy.dummy")
+        assert created_user
 
     def test_accout_register_fail(self):
         response = self.client.post(
@@ -131,3 +131,47 @@ class TestAccount(NinjaTestCase):
         state_response = self.client.get(f"{api.root_path}account/state")
         assert state_response.status_code == 200
         assert state_response.content == b'{"is_connected": true, "username": "admin"}'
+
+    def test_account_login_fail(self):
+        response = self.client.post(
+            f"{api.root_path}account/login",
+            data=json.dumps({"username": "admin", "password": "wrongpassword"}),
+            content_type="application/json",
+        )
+        assert response.status_code == 422
+        assert response.json() == {
+            "errors": {
+                "__all__": [
+                    {
+                        "code": "invalid_login",
+                        "message": "Please enter a correct username and "
+                        "password. Note that both fields may be "
+                        "case-sensitive.",
+                    }
+                ]
+            },
+        }
+
+    def test_account_logout(self):
+        # Login with admin
+        response = self.client.post(
+            f"{api.root_path}account/login",
+            data=json.dumps({"username": "admin", "password": "admin"}),
+            content_type="application/json",
+        )
+        assert response.status_code == 200
+        # Check state after login
+        state_response = self.client.get(f"{api.root_path}account/state")
+        assert state_response.status_code == 200
+        assert state_response.content == b'{"is_connected": true, "username": "admin"}'
+        # Logout
+        response = self.client.get(f"{api.root_path}account/logout")
+        assert response.status_code == 200
+        assert response.reason_phrase == "OK"
+        # Check state after logout
+        state_response = self.client.get(f"{api.root_path}account/state")
+        assert state_response.status_code == 200
+        assert (
+            state_response.content
+            == b'{"is_connected": false, "username": "anonymous"}'
+        )
