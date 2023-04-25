@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.test import override_settings
 from apps.account.utils.token import encode_token
 from main.api import api
 from ..testcase import NinjaTestCase

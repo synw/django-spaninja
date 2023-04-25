@@ -1,5 +1,4 @@
 from typing import List
-import jwt
 
 from django.http import HttpRequest
 from django.conf import settings
