@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+
+from apps.account.utils.token import encode_token
 from main.api import api
 from ..testcase import NinjaTestCase
 import json
@@ -80,3 +82,27 @@ class TestAccount(NinjaTestCase):
                 ]
             }
         }
+
+    def test_account_activate_token(self):
+        self.client.post(
+            f"{api.root_path}account/register",
+            data=json.dumps(
+                {
+                    "name": "johndoe",  # TODO: name is not used, may change username django settings
+                    "password1": "johndoeknowall",
+                    "password2": "johndoeknowall",
+                    "email": "johndoe@dummy.dummy",
+                }
+            ),
+            content_type="application/json",
+        )
+        # Get token
+        user = get_user_model().objects.get(username="johndoe@dummy.dummy")
+        token = encode_token(user.email)
+        # Activate
+        assert user.is_active is False
+        response = self.client.get(f"{api.root_path}account/activate/{token}")
+        assert response.status_code == 204
+        assert response.reason_phrase == "No Content"
+        user.refresh_from_db()
+        assert user.is_active
