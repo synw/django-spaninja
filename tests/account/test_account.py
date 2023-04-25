@@ -26,13 +26,11 @@ class TestAccount(NinjaTestCase):
         assert response.content == b'{"is_connected": false, "username": "anonymous"}'
 
     def test_user_account_state(self):
-        self.client.force_login(self.user)
-        response = self.client.get(f"{api.root_path}account/state")
+        response = self.user_client.get(f"{api.root_path}account/state")
         assert response.status_code == 200
         assert response.content == b'{"is_connected": true, "username": "user"}'
 
     def test_admin_account_state(self):
-        self.client.force_login(self.admin_user)
-        response = self.client.get(f"{api.root_path}account/state")
+        response = self.admin_client.get(f"{api.root_path}account/state")
         assert response.status_code == 200
         assert response.content == b'{"is_connected": true, "username": "admin"}'
