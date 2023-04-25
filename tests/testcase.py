@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 
 class NinjaTestCase(TestCase):
-    def setUp(self):
+    def create_client_helper(self):
         # Create test user
         self.user = get_user_model().objects.create_user(
             username="user", password="user"
@@ -17,7 +17,13 @@ class NinjaTestCase(TestCase):
         self.user_client.force_login(self.user)
         self.admin_client = self.client_class()
         self.admin_client.force_login(self.admin_user)
+
+    def link_api_helper(self):
         # Link api
         self.api = api
         self.root_path = self.api.root_path
         self.docs_url = self.api.docs_url
+
+    def setUp(self):
+        self.create_client_helper()
+        self.link_api_helper()
