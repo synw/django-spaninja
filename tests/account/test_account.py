@@ -46,8 +46,8 @@ class TestAccount(NinjaTestCase):
             f"{api.root_path}account/register",
             data=json.dumps(
                 {
-                    "name": USERNAME,  # TODO: name is not used, may change username django settings
-                    "password1": PWD,
+                    "name": "johndoe",  # TODO: name is not used, may change username django settings
+                    "password1": "johndoeknowall",
                     "password2": "johndoeknowall",
                     "email": "johndoe@dummy.dummy",
                 }
@@ -63,7 +63,7 @@ class TestAccount(NinjaTestCase):
             f"{api.root_path}account/register",
             data=json.dumps(
                 {
-                    "name": USERNAME,
+                    "name": "johndoe",
                     "password1": "johndoeknowall",
                     "password2": "jokerknowall",
                     "email": "johndoe@dummy.dummy",
@@ -113,10 +113,21 @@ class TestAccount(NinjaTestCase):
         assert response.json() == {"message": "Account activation refused"}
 
     def test_account_login(self):
+        # Check state before login
+        state_response = self.client.get(f"{api.root_path}account/state")
+        assert state_response.status_code == 200
+        assert (
+            state_response.content
+            == b'{"is_connected": false, "username": "anonymous"}'
+        )
+        # Login with admin
         response = self.client.post(
             f"{api.root_path}account/login",
-            data=json.dumps({"username": USERNAME, "password": PWD}),
+            data=json.dumps({"username": "admin", "password": "admin"}),
             content_type="application/json",
         )
         assert response.status_code == 200
-        assert response.json() == {"username": USERNAME}
+        # Check state after login
+        state_response = self.client.get(f"{api.root_path}account/state")
+        assert state_response.status_code == 200
+        assert state_response.content == b'{"is_connected": true, "username": "admin"}'
