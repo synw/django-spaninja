@@ -46,8 +46,8 @@ class TestAccount(NinjaTestCase):
             f"{api.root_path}account/register",
             data=json.dumps(
                 {
-                    "name": "johndoe",  # TODO: name is not used, may change username django settings
-                    "password1": "johndoeknowall",
+                    "name": USERNAME,  # TODO: name is not used, may change username django settings
+                    "password1": PWD,
                     "password2": "johndoeknowall",
                     "email": "johndoe@dummy.dummy",
                 }
@@ -63,7 +63,7 @@ class TestAccount(NinjaTestCase):
             f"{api.root_path}account/register",
             data=json.dumps(
                 {
-                    "name": "johndoe",
+                    "name": USERNAME,
                     "password1": "johndoeknowall",
                     "password2": "jokerknowall",
                     "email": "johndoe@dummy.dummy",
@@ -111,3 +111,12 @@ class TestAccount(NinjaTestCase):
         response = self.client.get(f"{api.root_path}account/activate/invalidtoken")
         assert response.status_code == 401
         assert response.json() == {"message": "Account activation refused"}
+
+    def test_account_login(self):
+        response = self.client.post(
+            f"{api.root_path}account/login",
+            data=json.dumps({"username": USERNAME, "password": PWD}),
+            content_type="application/json",
+        )
+        assert response.status_code == 200
+        assert response.json() == {"username": USERNAME}
