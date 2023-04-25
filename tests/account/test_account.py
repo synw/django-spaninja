@@ -106,3 +106,8 @@ class TestAccount(NinjaTestCase):
         assert response.reason_phrase == "No Content"
         user.refresh_from_db()
         assert user.is_active
+
+    def test_account_activate_token_fail(self):
+        response = self.client.get(f"{api.root_path}account/activate/invalidtoken")
+        assert response.status_code == 401
+        assert response.json() == {"message": "Account activation refused"}
