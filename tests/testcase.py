@@ -11,12 +11,17 @@ class NinjaTestCase(TestCase):
         self.admin_user = get_user_model().objects.create_superuser(
             username="admin", password="admin"
         )
+        self.user_client = self.client_class()
+        self.user_client.force_login(self.user)
+
+        self.admin_client = self.client_class()
+        self.admin_client.force_login(self.admin_user)
 
     def test_get_public(self):
         res = self.client.get("/")
         assert res.status_code == 200
 
-    def test_get_anonymes(self):
+    def test_get_anonymouss(self):
         res = self.client.get(f"{api.root_path}{api.docs_url[1:]}")
         assert res.status_code == 302
 
