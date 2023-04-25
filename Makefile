@@ -211,7 +211,7 @@ test:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Run the tests <---$(FORMATRESET)\n"
 	@echo ""
-	$(PYTHON_BIN) -m pytest
+	$(PYTHON_BIN) -m pytest --capture=no
 .PHONY: test
 
 check:
