@@ -8,6 +8,8 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.contrib.auth.models import AbstractBaseUser
 
+from apps.account.utils.token import encode_token
+
 
 def email_message(message: str, subject: str, to_email: str) -> int:
     """Send an email message
@@ -44,7 +46,7 @@ def email_activation_token(
     """
     current_site = get_current_site(request)
     domain = current_site.domain
-    token = jwt.encode({"email": user.email}, settings.SECRET_KEY, algorithm="HS256")
+    token = encode_token(user.email)
     message = render_to_string(
         template,
         {"domain": domain, "token": token},

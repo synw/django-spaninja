@@ -25,3 +25,15 @@ def decode_token(token: str) -> Tuple[bool, str]:
         print("Token decode error:", e)
         return (False, email)
     return (True, email)
+
+
+def encode_token(email: str) -> str:
+    """Encode a token
+
+    Args:
+        email (str): the email to encode
+
+    Returns:
+        str: the encoded token
+    """
+    return jwt.encode({"email": email}, settings.SECRET_KEY, algorithm="HS256")
