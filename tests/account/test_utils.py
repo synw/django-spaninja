@@ -32,8 +32,8 @@ def test_email_message():
     }
     email = email_activation_token(**email_data)
     assert email
-    assert len(mail.outbox) == 1
-    assert mail.outbox[0].subject == "Activate your account."
+    assert len(mail.outbox) == 1  # type: ignore
+    assert mail.outbox[0].subject == "Activate your account."  # type: ignore
 
 
 def test_encode_decode_token():

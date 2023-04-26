@@ -41,11 +41,12 @@ class TestAccount(NinjaTestCase):
         assert response.content == b'{"is_connected": true, "username": "admin"}'
 
     def test_accout_register(self):
+        # TODO: name is not used, may change username django settings
         response = self.client.post(
             f"{api.root_path}account/register",
             data=json.dumps(
                 {
-                    "name": "johndoe",  # TODO: name is not used, may change username django settings
+                    "name": "johndoe",
                     "password1": "johndoeknowall",
                     "password2": "johndoeknowall",
                     "email": "johndoe@dummy.dummy",
@@ -87,7 +88,7 @@ class TestAccount(NinjaTestCase):
             f"{api.root_path}account/register",
             data=json.dumps(
                 {
-                    "name": "johndoe",  # TODO: name is not used, may change username django settings
+                    "name": "johndoe",
                     "password1": "johndoeknowall",
                     "password2": "johndoeknowall",
                     "email": "johndoe@dummy.dummy",
