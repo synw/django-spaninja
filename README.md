@@ -61,7 +61,7 @@ Run:
 pycheckui
 ```
 
-Open `localhost:5173` in a browser to run an analysis. Note: this uses the `.pycheck.db` Sqlite file
+Open `localhost:5143` in a browser to run an analysis. Note: this uses a `.pycheck.db` local Sqlite file
 to store the code quality history
 
 #### Command line
