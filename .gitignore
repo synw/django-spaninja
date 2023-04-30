@@ -11,6 +11,7 @@ pyvenv.cfg
 /email
 /main/webapp_statics/frontend/assets/**
 .pytest_cache
+.pycheck.db
 
 __pycache__/
 *.py[cod]
