@@ -12,6 +12,7 @@ pyvenv.cfg
 /main/webapp_statics/frontend/assets/**
 .pytest_cache
 .pycheck.db
+.ruff_cache
 
 __pycache__/
 *.py[cod]
