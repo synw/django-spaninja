@@ -9,3 +9,4 @@ django-vitevue
 pytest-django
 docdundee
 ipdb
+six
