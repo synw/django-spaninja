@@ -13,6 +13,7 @@ pyvenv.cfg
 .pytest_cache
 .pycheck.db
 .ruff_cache
+localsettings.py
 
 __pycache__/
 *.py[cod]
