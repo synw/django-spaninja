@@ -20,7 +20,7 @@ class NinjaTestCase(TestCase):
     def link_api_helper(self):
         """Can override this method to link another project api to the test case."""
         self.api = api
-        self.root_path = self.api.root_path
+        self.root_path = self.api.get_root_path([])
         self.docs_url = self.api.docs_url
 
     def setUp(self):
