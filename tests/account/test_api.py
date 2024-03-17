@@ -15,35 +15,35 @@ def test_user_creation():
 
 
 def test_admin_account_state(admin_client):
-    response = admin_client.get(f"{api.root_path}account/state")
+    response = admin_client.get(f"{api.get_root_path([])}account/state")
     assert response.status_code == 200
     assert response.content == b'{"is_connected": true, "username": "admin"}'
 
 
 class TestAccount(NinjaTestCase):
     def test_anonymous_account_state(self):
-        response = self.client.get(f"{api.root_path}account/state")
+        response = self.client.get(f"{api.get_root_path([])}account/state")
         assert response.status_code == 200
         self.assertJSONEqual(
             response.content, {"is_connected": False, "username": "anonymous"}
         )
 
     def test_user_account_state(self):
-        response = self.user_client.get(f"{api.root_path}account/state")
+        response = self.user_client.get(f"{api.get_root_path([])}account/state")
         assert response.status_code == 200
         self.assertJSONEqual(
             response.content, {"is_connected": True, "username": "user"}
         )
 
     def test_admin_account_state(self):
-        response = self.admin_client.get(f"{api.root_path}account/state")
+        response = self.admin_client.get(f"{api.get_root_path([])}account/state")
         assert response.status_code == 200
         assert response.content == b'{"is_connected": true, "username": "admin"}'
 
     def test_accout_register(self):
         # TODO: name is not used, may change username django settings
         response = self.client.post(
-            f"{api.root_path}account/register",
+            f"{api.get_root_path([])}account/register",
             data=json.dumps(
                 {
                     "name": "johndoe",
@@ -60,7 +60,7 @@ class TestAccount(NinjaTestCase):
 
     def test_accout_register_fail(self):
         response = self.client.post(
-            f"{api.root_path}account/register",
+            f"{api.get_root_path([])}account/register",
             data=json.dumps(
                 {
                     "name": "johndoe",
@@ -85,7 +85,7 @@ class TestAccount(NinjaTestCase):
 
     def test_account_activate_token(self):
         self.client.post(
-            f"{api.root_path}account/register",
+            f"{api.get_root_path([])}account/register",
             data=json.dumps(
                 {
                     "name": "johndoe",
@@ -101,20 +101,20 @@ class TestAccount(NinjaTestCase):
         token = encode_token(user.email)
         # Activate
         assert user.is_active is False
-        response = self.client.get(f"{api.root_path}account/activate/{token}")
+        response = self.client.get(f"{api.get_root_path([])}account/activate/{token}")
         assert response.status_code == 204
         assert response.reason_phrase == "No Content"
         user.refresh_from_db()
         assert user.is_active
 
     def test_account_activate_token_fail(self):
-        response = self.client.get(f"{api.root_path}account/activate/invalidtoken")
+        response = self.client.get(f"{api.get_root_path([])}account/activate/invalidtoken")
         assert response.status_code == 401
         assert response.json() == {"message": "Account activation refused"}
 
     def test_account_login(self):
         # Check state before login
-        state_response = self.client.get(f"{api.root_path}account/state")
+        state_response = self.client.get(f"{api.get_root_path([])}account/state")
         assert state_response.status_code == 200
         assert (
             state_response.content
@@ -122,19 +122,19 @@ class TestAccount(NinjaTestCase):
         )
         # Login with admin
         response = self.client.post(
-            f"{api.root_path}account/login",
+            f"{api.get_root_path([])}account/login",
             data=json.dumps({"username": "admin", "password": "admin"}),
             content_type="application/json",
         )
         assert response.status_code == 200
         # Check state after login
-        state_response = self.client.get(f"{api.root_path}account/state")
+        state_response = self.client.get(f"{api.get_root_path([])}account/state")
         assert state_response.status_code == 200
         assert state_response.content == b'{"is_connected": true, "username": "admin"}'
 
     def test_account_login_fail(self):
         response = self.client.post(
-            f"{api.root_path}account/login",
+            f"{api.get_root_path([])}account/login",
             data=json.dumps({"username": "admin", "password": "wrongpassword"}),
             content_type="application/json",
         )
@@ -155,21 +155,21 @@ class TestAccount(NinjaTestCase):
     def test_account_logout(self):
         # Login with admin
         response = self.client.post(
-            f"{api.root_path}account/login",
+            f"{api.get_root_path([])}account/login",
             data=json.dumps({"username": "admin", "password": "admin"}),
             content_type="application/json",
         )
         assert response.status_code == 200
         # Check state after login
-        state_response = self.client.get(f"{api.root_path}account/state")
+        state_response = self.client.get(f"{api.get_root_path([])}account/state")
         assert state_response.status_code == 200
         assert state_response.content == b'{"is_connected": true, "username": "admin"}'
         # Logout
-        response = self.client.get(f"{api.root_path}account/logout")
+        response = self.client.get(f"{api.get_root_path([])}account/logout")
         assert response.status_code == 200
         assert response.reason_phrase == "OK"
         # Check state after logout
-        state_response = self.client.get(f"{api.root_path}account/state")
+        state_response = self.client.get(f"{api.get_root_path([])}account/state")
         assert state_response.status_code == 200
         assert (
             state_response.content
