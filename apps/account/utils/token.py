@@ -6,13 +6,15 @@ from django.conf import settings
 
 
 def decode_token(token: str) -> Tuple[bool, str]:
-    """Decode and validate an activation token
-
+    """
+    Decodes and validates an activation token.
     Args:
-        token (str): the token
+        token (str): The token to decode and validate.
 
     Returns:
-        Tuple[bool, str]: is the token valid and the user email
+        Tuple[bool, str]: A tuple where the first element indicates if
+                           the token is valid and the second element contains
+                           the user email.
     """
     email = ""
     try:

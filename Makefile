@@ -121,7 +121,7 @@ venv:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Install virtual environment <---$(FORMATRESET)\n"
 	@echo ""
-	virtualenv -p $(PYTHON_INTERPRETER) $(VENV_PATH)
+	$(PYTHON_INTERPRETER) -m venv $(VENV_PATH)
 	# This is required for those ones using old distribution
 	$(PIP) install --upgrade pip
 	$(PIP) install --upgrade setuptools
